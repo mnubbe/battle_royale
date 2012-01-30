@@ -15,6 +15,16 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+/*
+
+Command in Minecraft to use:
+
+/cs walls [players] <type>
+[players] = number of players in the game
+<type> = material type for the wall
+
+*/
+
 importPackage(Packages.java.io);
 importPackage(Packages.java.awt);
 importPackage(Packages.com.sk89q.worldedit);
@@ -62,10 +72,10 @@ var x = -size; //Begins wall construction at -x, goes up at Y from 0 to 126, mov
 
 for (x; x < size; x++) {
    for (var y = 0; y < 127; y++) {
-        var vecN = new Vector(
+        var vecS = new Vector(
              x, y, -size);
              
-        blocks.setBlock(vecN, blocktype);
+        blocks.setBlock(vecS, blocktype);
    }          
 }  
 
@@ -75,10 +85,10 @@ var z = -size; //Begins wall construction at -z, goes up y from 0 to 126, moves 
 
 for (z; z < size; z++) {
      for (y = 0; y < 127; y++) {
-        var vecE = new Vector(
+        var vecW = new Vector(
              -size, y, z);
              
-        blocks.setBlock(vecE, blocktype);     
+        blocks.setBlock(vecW, blocktype);     
      }
 }     
 
