@@ -43,13 +43,13 @@ var size = players * 10; //Sets the +/- of the border
 
 
 //Functions
-function Wall(blocktype,StartZ,StartX,mySize,isInXdirection)
+function Wall(blocktype,StartX,StartZ,mySize,isInXdirection)
 //if(isInXdirection==1), then builds in the +X direction (East)
 //otherwise in the +Z direction (South)
 {
     if(isInXdirection==1){
         var z=StartZ;
-        for(var x = StartX;x<mySize;x++) {
+        for(var x = StartX;x<mySize+StartX;x++) {
             for (var y = 0; y < 127; y++) {
                 var vecE = new Vector(x, y, z);
                 blocks.setBlock(vecE, blocktype);
@@ -57,7 +57,7 @@ function Wall(blocktype,StartZ,StartX,mySize,isInXdirection)
         }
     }else{
         var x=StartX;
-        for(z = StartZ;z<mySize;z++) {
+        for(z = StartZ;z<mySize+StartZ;z++) {
             for (var y = 0; y < 127; y++) {
                 var vecE = new Vector(x, y, z);
                 blocks.setBlock(vecE, blocktype);
@@ -67,58 +67,13 @@ function Wall(blocktype,StartZ,StartX,mySize,isInXdirection)
 }
 
 
-//North Wall
+//Notes:
+//+X == East
+//+Y == Up
+//+Z == South
 
-var x = -size; //Begins wall construction at -x, goes up at Y from 0 to 126, moves to -x + 1,
-               //repeats until hitting x
-
-for (x; x < size; x++) {
-   for (var y = 0; y < 127; y++) {
-        var vecN = new Vector(
-             x, y, size);
-             
-        blocks.setBlock(vecN, blocktype);
-   }          
-}   
-
-//East Wall
-
-var z = -size; //Begins wall construction at -z, goes up y from 0 to 126, moves to -z + 1, 
-               //repeat until hitting z
-
-for (z; z <= size; z++) {
-     for (y = 0; y < 127; y++) {
-        var vecE = new Vector(
-             size, y, z);
-             
-        blocks.setBlock(vecE, blocktype);     
-     }
-}     
-
-//South Wall
-
-var x = -size; //Begins wall construction at -x, goes up at Y from 0 to 126, moves to -x + 1, 
-               //repeats until hitting x
-
-for (x; x < size; x++) {
-   for (var y = 0; y < 127; y++) {
-        var vecS = new Vector(
-             x, y, -size);
-             
-        blocks.setBlock(vecS, blocktype);
-   }          
-}  
-
-//West Wall
-
-var z = -size; //Begins wall construction at -z, goes up y from 0 to 126, moves to -z + 1, 
-               //repeat until hitting z
-
-for (z; z < size; z++) {
-     for (y = 0; y < 127; y++) {
-        var vecW = new Vector(
-             -size, y, z);
-             
-        blocks.setBlock(vecW, blocktype);     
-     }
-}
+//Wall(blocktype,StartX,StartZ,mySize,isInXdirection);
+Wall(blocktype,-size,-size,size+size+1,1);//North
+Wall(blocktype,-size,size,size+size+1,1);//South
+Wall(blocktype,size,-size,size+size+1,0);//East
+Wall(blocktype,-size,-size,size+size+1,0);//West
