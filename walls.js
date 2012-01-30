@@ -40,6 +40,8 @@ var players = parseInt(argv[1]); //Parses the player number
 var blocktype = context.getBlock(argv[2]); // Parses the block type
 
 var size = players * 10; //Sets the +/- of the border
+var RaftorSize = 15; //Sets the width of the Raftors. 
+                     //Ideal for clean Minecraft map. RaftorSize = 150
 
 
 //Functions
@@ -71,15 +73,15 @@ function Raftor(blocktype, StartZ, StartX, mySize, isInXdirection)
 //otherwise in the +Z direction (South)
 {
     if(isInXdirection==1){
-        for(var x = StartX;x<=StartX+15;x++) {
-            for(var z = StartZ;z<=StartZ+15+(2*size);z++) {
+        for(var x = StartX;x<=StartX+RaftorSize;x++) {
+            for(var z = StartZ;z<=StartZ+RaftorSize+(2*size);z++) {
                 var vecE = new Vector(x, 126, z);
                 blocks.setBlock(vecE, blocktype);
             }
         }
     }else{
-        for(var z = StartZ;z<=StartZ+15;z++) {
-            for(var x = StartX;x<=StartX+15+(2*size);x++) {
+        for(var z = StartZ;z<=StartZ+RaftorSize;z++) {
+            for(var x = StartX;x<=StartX+RaftorSize+(2*size);x++) {
                 var vecE = new Vector(x, 126, z);
                 blocks.setBlock(vecE, blocktype);
             }
@@ -100,8 +102,8 @@ Wall(blocktype,-size,size,size+size+1,1);//South
 Wall(blocktype,size,-size,size+size+1,0);//East
 Wall(blocktype,-size,-size,size+size+1,0);//West
 
-Raftor(blocktype, -size - 15, -size - 15, size, 0)
+Raftor(blocktype, -size - RaftorSize, -size - RaftorSize, size, 0)
 Raftor(blocktype, size, -size, size, 0)
-Raftor(blocktype, -size - 15, size, size, 1)
-Raftor(blocktype, -size, -size - 15, size, 1)
+Raftor(blocktype, -size - RaftorSize, size, size, 1)
+Raftor(blocktype, -size, -size - RaftorSize, size, 1)
 
