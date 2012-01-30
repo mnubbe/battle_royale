@@ -66,6 +66,28 @@ function Wall(blocktype,StartX,StartZ,mySize,isInXdirection)
     }
 }
 
+function Raftor(blocktype, StartZ, StartX, mySize, isInXdirection)
+//if(isInXdirection==1), then builds in the +X direction (East)
+//otherwise in the +Z direction (South)
+{
+    if(isInXdirection==1){
+        for(var x = StartX;x<=StartX+mySize;x++) {
+            for(var z = StartZ;z<=StartZ+(3*mySize);z++) {
+                var vecE = new Vector(x, 126, z);
+                blocks.setBlock(vecE, blocktype);
+            }
+        }
+    }else{
+        for(var z = StartZ;z<=StartZ+mySize;z++) {
+            for(var x = StartX;x<=StartX+(3*mySize);x++) {
+                var vecE = new Vector(x, 126, z);
+                blocks.setBlock(vecE, blocktype);
+            }
+        }
+    }
+}
+
+//Function execution
 
 //Notes:
 //+X == East
@@ -77,3 +99,9 @@ Wall(blocktype,-size,-size,size+size+1,1);//North
 Wall(blocktype,-size,size,size+size+1,1);//South
 Wall(blocktype,size,-size,size+size+1,0);//East
 Wall(blocktype,-size,-size,size+size+1,0);//West
+
+Raftor(blocktype, -2*size, -2*size, size, 0)
+Raftor(blocktype, size, -size, size, 0)
+Raftor(blocktype, -2*size, size, size, 1)
+Raftor(blocktype, -size, -2*size, size, 1)
+
