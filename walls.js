@@ -32,7 +32,8 @@ importPackage(Packages.com.sk89q.worldedit.blocks);
 
 var blocks = context.remember();
 
-context.checkArgs(1, 2, "[players] <type>"); // From observing other code, 1 starts this, and the 2 was necessary based on observing code with other argument numbers
+context.checkArgs(1, 2, "[players] <type>"); // From observing other code, 1 starts this, 
+              //and the 2 was necessary based on observing code with other argument numbers
 
 var players = parseInt(argv[1]); //Parses the player number
 
@@ -68,7 +69,8 @@ function Wall(blocktype,StartZ,StartX,mySize,isInXdirection)
 
 //North Wall
 
-var x = -size; //Begins wall construction at -x, goes up at Y from 0 to 126, moves to -x + 1, repeats until hitting x
+var x = -size; //Begins wall construction at -x, goes up at Y from 0 to 126, moves to -x + 1,
+               //repeats until hitting x
 
 for (x; x < size; x++) {
    for (var y = 0; y < 127; y++) {
@@ -81,9 +83,10 @@ for (x; x < size; x++) {
 
 //East Wall
 
-var z = -size; //Begins wall construction at -z, goes up y from 0 to 126, moves to -z + 1, repeat until hitting z
+var z = -size; //Begins wall construction at -z, goes up y from 0 to 126, moves to -z + 1, 
+               //repeat until hitting z
 
-for (z; z < size; z++) {
+for (z; z <= size; z++) {
      for (y = 0; y < 127; y++) {
         var vecE = new Vector(
              size, y, z);
@@ -94,7 +97,8 @@ for (z; z < size; z++) {
 
 //South Wall
 
-var x = -size; //Begins wall construction at -x, goes up at Y from 0 to 126, moves to -x + 1, repeats until hitting x
+var x = -size; //Begins wall construction at -x, goes up at Y from 0 to 126, moves to -x + 1, 
+               //repeats until hitting x
 
 for (x; x < size; x++) {
    for (var y = 0; y < 127; y++) {
@@ -107,7 +111,8 @@ for (x; x < size; x++) {
 
 //West Wall
 
-var z = -size; //Begins wall construction at -z, goes up y from 0 to 126, moves to -z + 1, repeat until hitting z
+var z = -size; //Begins wall construction at -z, goes up y from 0 to 126, moves to -z + 1, 
+               //repeat until hitting z
 
 for (z; z < size; z++) {
      for (y = 0; y < 127; y++) {
