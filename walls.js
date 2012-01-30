@@ -81,3 +81,33 @@ for (z; z < size; z++) {
         blocks.setBlock(vecE, blocktype);     
      }
 }     
+
+
+
+
+
+
+//Functions
+
+function Wall(blocktype,StartZ,StartX,mySize,isInXdirection)
+//if(isInXdirection==1), then builds in the +X direction (East)
+//otherwise in the +Z direction (South)
+{
+    if(isInXdirection==1){
+        var z=StartZ;
+        for(var x = StartX;x<mySize;x++) {
+            for (var y = 0; y < 127; y++) {
+                var vecE = new Vector(x, y, z);
+                blocks.setBlock(vecE, blocktype);
+            }
+        }
+    }else{
+        var x=StartX;
+        for(z = StartZ;z<mySize;x++) {
+            for (var y = 0; y < 127; y++) {
+                var vecE = new Vector(x, y, z);
+                blocks.setBlock(vecE, blocktype);
+            }
+        }
+    }
+}
