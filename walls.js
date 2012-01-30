@@ -57,7 +57,7 @@ function Wall(blocktype,StartZ,StartX,mySize,isInXdirection)
         }
     }else{
         var x=StartX;
-        for(z = StartZ;z<mySize;x++) {
+        for(z = StartZ;z<mySize;z++) {
             for (var y = 0; y < 127; y++) {
                 var vecE = new Vector(x, y, z);
                 blocks.setBlock(vecE, blocktype);
