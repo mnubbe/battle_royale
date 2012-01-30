@@ -15,6 +15,16 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+/*
+
+Command in Minecraft to use:
+
+/cs walls [players] <type>
+[players] = number of players in the game
+<type> = material type for the wall
+
+*/
+
 importPackage(Packages.java.io);
 importPackage(Packages.java.awt);
 importPackage(Packages.com.sk89q.worldedit);
