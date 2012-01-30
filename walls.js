@@ -57,7 +57,7 @@ for (x; x < size; x++) {
 
 var z = -size; //Begins wall construction at -z, goes up y from 0 to 126, moves to -z + 1, repeat until hitting z
 
-for (z; z < size; z++) {
+for (z; z <= size; z++) {
      for (y = 0; y < 127; y++) {
         var vecE = new Vector(
              size, y, z);
