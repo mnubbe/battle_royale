@@ -1,0 +1,3 @@
+BATTLE ROYALE
+
+This uses sk89q's WorldEdit plugin to allow a minecraft server to create an initial terrain which includes various objects for a special setting, such as a closed box for SMP action.  The javascript is run through this plugin with the help of Rhino's js.jar.
