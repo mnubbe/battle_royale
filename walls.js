@@ -40,6 +40,32 @@ var blocktype = context.getBlock(argv[2]); // Parses the block type
 
 var size = players * 10; //Sets the +/- of the border
 
+
+//Functions
+function Wall(blocktype,StartZ,StartX,mySize,isInXdirection)
+//if(isInXdirection==1), then builds in the +X direction (East)
+//otherwise in the +Z direction (South)
+{
+    if(isInXdirection==1){
+        var z=StartZ;
+        for(var x = StartX;x<mySize;x++) {
+            for (var y = 0; y < 127; y++) {
+                var vecE = new Vector(x, y, z);
+                blocks.setBlock(vecE, blocktype);
+            }
+        }
+    }else{
+        var x=StartX;
+        for(z = StartZ;z<mySize;x++) {
+            for (var y = 0; y < 127; y++) {
+                var vecE = new Vector(x, y, z);
+                blocks.setBlock(vecE, blocktype);
+            }
+        }
+    }
+}
+
+
 //North Wall
 
 var x = -size; //Begins wall construction at -x, goes up at Y from 0 to 126, moves to -x + 1, repeats until hitting x
@@ -90,34 +116,4 @@ for (z; z < size; z++) {
              
         blocks.setBlock(vecW, blocktype);     
      }
-}     
-
-
-
-
-
-
-//Functions
-
-function Wall(blocktype,StartZ,StartX,mySize,isInXdirection)
-//if(isInXdirection==1), then builds in the +X direction (East)
-//otherwise in the +Z direction (South)
-{
-    if(isInXdirection==1){
-        var z=StartZ;
-        for(var x = StartX;x<mySize;x++) {
-            for (var y = 0; y < 127; y++) {
-                var vecE = new Vector(x, y, z);
-                blocks.setBlock(vecE, blocktype);
-            }
-        }
-    }else{
-        var x=StartX;
-        for(z = StartZ;z<mySize;x++) {
-            for (var y = 0; y < 127; y++) {
-                var vecE = new Vector(x, y, z);
-                blocks.setBlock(vecE, blocktype);
-            }
-        }
-    }
 }
