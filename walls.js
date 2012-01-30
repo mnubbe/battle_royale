@@ -21,13 +21,12 @@ importPackage(Packages.com.sk89q.worldedit);
 importPackage(Packages.com.sk89q.worldedit.blocks);
 
 var blocks = context.remember();
-var session = context.getSession(); // Unsure if either of these lines are necessary
 
 context.checkArgs(1, 2, "[players] <type>"); // From observing other code, 1 starts this, and the 2 was necessary based on observing code with other argument numbers
 
 var players = parseInt(argv[1]); //Parses the player number
 
-var blocktype = context.getBlock(argv[2]); // Parses the block type, will look to remove this soon
+var blocktype = context.getBlock(argv[2]); // Parses the block type
 
 var size = players * 10; //Sets the +/- of the border
 
