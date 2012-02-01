@@ -185,6 +185,21 @@ function Floor(blocktype, StartX, StartZ)
 		}
 	}
 }
+
+function SpanChest(Location, Items)
+//Places a chest and populates it with items
+/* Example Usage
+ * var Map0 = new BaseItemStack(358, 1);
+ * var ChestPos = new Vector(121,65,117)
+ * SpanChest(ChestPos,Map0);
+ */
+{
+	var items = [Items]
+	var block = BaseBlock(ChestBlock(1,items));
+	blocks.setBlock(Location,block);
+
+}
+
 //Function execution
 
 //Notes:
