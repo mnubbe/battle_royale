@@ -42,8 +42,12 @@ var size = players * 10; //Sets the +/- of the border
 var RaftorSize = 15; //Sets the width of the Raftors. 
 //Ideal for clean Minecraft map. RaftorSize = 150
 
+//Examples:
+//Confirmed to work
+//blocks.setBlock(Vector(0,65,0),BaseBlock(BlockID.BEDROCK));
 
 //Functions
+//Confirmed to work
 function Wall(blocktype,StartX,StartZ,mySize,isInXdirection)
 //if(isInXdirection==1), then builds in the +X direction (East)
 //otherwise in the +Z direction (South)
@@ -88,32 +92,38 @@ function Raftor(blocktype, StartZ, StartX, mySize, isInXdirection)
     }
 }
 
+//Confirmed to work
 function SquareXZ(blocktype,radius,x,y,z)
 //Makes a (1+2*radius) sized square centered at x,y,z.  radius==0 means 1x1, r=1 means 3x3, so on...
 {
     for(var i=x-radius;i<=x+radius;i++){
-        for(var j=y-radius;j<=y+radius;j++){
-            var vecE = new Vector(i,j,z);
-            blocks.setBlock(vecE,blocktype);
+        for(var j=z-radius;j<=z+radius;j++){
+            blocks.setBlock(Vector(i,y,j),blocktype);
         }
     }
 }
 
+//Confirmed to work
 function MakePavillion(x,y,z){
-    //SquareXZ(mossy_cobblestone,5,x,y,z);
-    //SquareXZ(bedrock,2,x,y,z);
-    //SquareXZ(air,5,x,y+1,z);
-    //SquareXZ(air,5,x,y+2,z);
-    //SquareXZ(bedrock,5,x,y+3,z);
-    //SquareXZ(bedrock,5,x,y+4,z);
-    //SquareXZ(bedrock,5,x,y+5,z);
-    //SquareXZ(lava,4,x,y+4,z);
-    //SquareXZ(lava,4,x,y+5,z);
-    var positions = [-1,1];
-    for(i in positions){
-        for(j in positions){
+    SquareXZ(BaseBlock(BlockID.MOSSY_COBBLESTONE),5,x,y,z);
+    SquareXZ(BaseBlock(BlockID.BEDROCK),2,x,y,z);
+    SquareXZ(BaseBlock(BlockID.AIR),5,x,y+1,z);
+    SquareXZ(BaseBlock(BlockID.AIR),5,x,y+2,z);
+    SquareXZ(BaseBlock(BlockID.BEDROCK),5,x,y+3,z);
+    SquareXZ(BaseBlock(BlockID.BEDROCK),5,x,y+4,z);
+    SquareXZ(BaseBlock(BlockID.BEDROCK),5,x,y+5,z);
+    //SquareXZ(BaseBlock(BlockID.LAVA),4,x,y+4,z);
+    SquareXZ(BaseBlock(BlockID.LAVA),4,x,y+5,z);
+    var p = [-1,1];
+    var torch = new BaseBlock(BlockID.TORCH);
+    var glass = new BaseBlock(BlockID.GLASS);
+    for(i in p){
+        for(j in p){
             //add torches (1)
+            blocks.setBlock(Vector(x+2*p[i],y+1,z+2*p[j]),torch);
             //add glass (2)
+            blocks.setBlock(Vector(x+2*p[i],y+1,z+2*p[j]),glass);
+            blocks.setBlock(Vector(x+5*p[i],y+2,z+5*p[j]),glass);
         }
     }
 }
@@ -158,3 +168,4 @@ Raftor(blocktype, -size - RaftorSize, size, size, 1);
 Raftor(blocktype, -size, -size - RaftorSize, size, 1);
 
 Spawner(0,0);
+
