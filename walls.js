@@ -12,17 +12,17 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 /*
-
-Command in Minecraft to use:
-
-/cs walls [players] <type>
-[players] = number of players in the game
-<type> = material type for the wall
-
-*/
+ 
+ Command in Minecraft to use:
+ 
+ /cs walls [players] <type>
+ [players] = number of players in the game
+ <type> = material type for the wall
+ 
+ */
 
 importPackage(Packages.java.io);
 importPackage(Packages.java.awt);
@@ -32,7 +32,7 @@ importPackage(Packages.com.sk89q.worldedit.blocks);
 var blocks = context.remember();
 
 context.checkArgs(1, 2, "[players] <type>"); // From observing other code, 1 starts this, 
-              //and the 2 was necessary based on observing code with other argument numbers
+//and the 2 was necessary based on observing code with other argument numbers
 
 var players = parseInt(argv[1]); //Parses the player number
 
@@ -40,7 +40,7 @@ var blocktype = context.getBlock(argv[2]); // Parses the block type
 
 var size = players * 10; //Sets the +/- of the border
 var RaftorSize = 15; //Sets the width of the Raftors. 
-                     //Ideal for clean Minecraft map. RaftorSize = 150
+//Ideal for clean Minecraft map. RaftorSize = 150
 
 
 //Functions
@@ -88,6 +88,27 @@ function Raftor(blocktype, StartZ, StartX, mySize, isInXdirection)
     }
 }
 
+function Spawner(StartX, StartZ)
+// For now, creates a block one above the first non-air block it encounters
+// of type "blocktype"
+{
+	var vecC = new Vector(StartX, 126, StartZ); //initializing variables
+	var y = 127;
+	var airCheck = true;
+	var block = blocks.getBlockType(vecC);
+	while (airCheck==true){ //while the block in question is air, the loop continues down
+		y=y-1;
+		vecC = Vector(StartX, y, StartZ);
+		block = blocks.getBlockType(vecC);
+		
+		if (block != BlockID.AIR) {
+			airCheck = false;
+		}
+	 }
+	y = y+1; // sets the block to be places above the not-air block encountered
+	vecC = Vector(StartX, y, StartZ);
+	blocks.setBlock(vecC, blocktype);
+}
 //Function execution
 
 //Notes:
@@ -101,8 +122,9 @@ Wall(blocktype,-size,size,size+size+1,1);//South
 Wall(blocktype,size,-size,size+size+1,0);//East
 Wall(blocktype,-size,-size,size+size+1,0);//West
 
-Raftor(blocktype, -size - RaftorSize, -size - RaftorSize, size, 0)
-Raftor(blocktype, size, -size, size, 0)
-Raftor(blocktype, -size - RaftorSize, size, size, 1)
-Raftor(blocktype, -size, -size - RaftorSize, size, 1)
+Raftor(blocktype, -size - RaftorSize, -size - RaftorSize, size, 0);
+Raftor(blocktype, size, -size, size, 0);
+Raftor(blocktype, -size - RaftorSize, size, size, 1);
+Raftor(blocktype, -size, -size - RaftorSize, size, 1);
 
+Spawner(0,0);
