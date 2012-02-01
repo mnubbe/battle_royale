@@ -134,7 +134,7 @@ function MakePavillion(x,y,z){
             //add torches (1)
             blocks.setBlock(Vector(x+2*p[i],y+1,z+2*p[j]),torch);
             //add glass (2)
-            blocks.setBlock(Vector(x+2*p[i],y+1,z+2*p[j]),glass);
+            blocks.setBlock(Vector(x+5*p[i],y+1,z+2*p[j]),glass);
             blocks.setBlock(Vector(x+5*p[i],y+2,z+5*p[j]),glass);
         }
     }
