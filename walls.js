@@ -88,6 +88,36 @@ function Raftor(blocktype, StartZ, StartX, mySize, isInXdirection)
     }
 }
 
+function SquareXZ(blocktype,radius,x,y,z)
+//Makes a (1+2*radius) sized square centered at x,y,z.  radius==0 means 1x1, r=1 means 3x3, so on...
+{
+    for(var i=x-radius;i<=x+radius;i++){
+        for(var j=y-radius;j<=y+radius;j++){
+            var vecE = new Vector(i,j,z);
+            blocks.setBlock(vecE,blocktype);
+        }
+    }
+}
+
+function MakePavillion(x,y,z){
+    //SquareXZ(mossy_cobblestone,5,x,y,z);
+    //SquareXZ(bedrock,2,x,y,z);
+    //SquareXZ(air,5,x,y+1,z);
+    //SquareXZ(air,5,x,y+2,z);
+    //SquareXZ(bedrock,5,x,y+3,z);
+    //SquareXZ(bedrock,5,x,y+4,z);
+    //SquareXZ(bedrock,5,x,y+5,z);
+    //SquareXZ(lava,4,x,y+4,z);
+    //SquareXZ(lava,4,x,y+5,z);
+    var positions = [-1,1];
+    for(i in positions){
+        for(j in positions){
+            //add torches (1)
+            //add glass (2)
+        }
+    }
+}
+
 //Function execution
 
 //Notes:
