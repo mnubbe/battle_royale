@@ -210,6 +210,9 @@ function MakeSpawnRoom(x,y,z,direction){
 function Spawner(StartX, StartZ)
 // For now, creates a block one above the first non-air block it encounters
 // of type "blocktype"
+
+// Example: Spawner(0,0);
+// Spanws a block on the ground at 0,0
 {
 	var vecC = new Vector(StartX, 126, StartZ); //initializing variables
 	var y = 127;
@@ -266,22 +269,17 @@ Wall(blocktype,origin.getX()-size,origin.getZ()+size,size+size+1,1); // South
 Wall(blocktype,origin.getX()+size,origin.getZ()-size,size+size+1,0); // East
 Wall(blocktype,origin.getX()-size,origin.getZ()-size,size+size+1,0); // West
 
-//Raftor(blocktype,StartX,StartZ,mySize,isInXdirection);
+//Raftor(blocktype,StartZ,StartX,mySize,isInXdirection);
 Raftor(blocktype,origin.getZ()-size-RaftorSize ,origin.getX()-size-RaftorSize ,size,0); // SW
 Raftor(blocktype,origin.getZ()+size            ,origin.getX()-size            ,size,0); // NE
 Raftor(blocktype,origin.getZ()-size-RaftorSize ,origin.getX()+size            ,size,1); // NW
 Raftor(blocktype,origin.getZ()-size            ,origin.getX()-size-RaftorSize ,size,1); // SE
 
-player.print ("Done");
-
 Floor(blocktype, size, size);
 
-Spawner(0,0);
-
+player.print ("Done");
 
 //for(var i=0;i<20;i++)
 //{
 //    blocks.setBlock(VectorRotate(Vector(0.5,85+i,0.5),i),BaseBlock(BlockID.LIGHTSTONE));
 //}//Makes a spiral staircase of lightstone around the origin
-
-
