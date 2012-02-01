@@ -27,6 +27,7 @@ importPackage(Packages.java.io);
 importPackage(Packages.java.awt);
 importPackage(Packages.com.sk89q.worldedit);
 importPackage(Packages.com.sk89q.worldedit.blocks);
+importPackage(Packages.com.sk89q.worldedit.regions);
 
 // API list for these packages can be found at
 // http://www.sk89q.com/docs/worldedit/api/
@@ -140,6 +141,55 @@ function MakePavillion(x,y,z){
     }
 }
 
+//Confirmed to work
+//Returns a vector rotated 90 degrees from Minecraft's top view
+function VectorRotate(inVector,numberOfRotations)
+{
+    var newx;
+    var newz;
+    if(numberOfRotations%2==0){
+        newx = inVector.getX();
+        newz = inVector.getZ();
+    }else{
+        newx = -inVector.getZ();
+        newz = inVector.getX();
+    }
+    if(numberOfRotations%4>=2){
+        newx = -newx;
+        newz = -newz;
+    }    
+    return Vector(newx, inVector.getY(),newz);
+}
+
+//confirmed to work
+function MakeSpawnRoom(x,y,z,direction){
+    //0 = north, 1=east, 2=south, 3=west (in terms of what direction you look into the door)
+    var dir = [[0,-1],[1,0],[0,1],[-1,0]];//Mappings for unit vectors for these directions
+    var baseVec = new Vector(x,y,z);
+    blocks.setBlock(baseVec,BaseBlock(BlockID.BEDROCK));
+    //Set the two relative vectors for a north room's cuboid
+    var vecMod1 = new Vector(-3,0,-1);
+    var vecMod2 = new Vector(3,6,-6);
+    
+    //Define a cuboid region that is the spawn point
+    var cuboid = new CuboidRegion(baseVec.add(VectorRotate(vecMod1,direction)),
+                                  baseVec.add(VectorRotate(vecMod2,direction)));
+    //Clear the entire thing with air
+    blocks.setBlocks(cuboid,BaseBlock(BlockID.AIR));
+    //Make every face bedrock
+    blocks.makeCuboidFaces(cuboid,BaseBlock(BlockID.BEDROCK));
+    
+    //Relative vectors for the 3 internal objects
+    var torch1 = new VectorRotate(Vector( 1,2,-2),direction);
+    var torch2 = new VectorRotate(Vector(-1,2,-2),direction);
+    var chest  = new VectorRotate(Vector(-1,1,-2),direction);
+
+    blocks.setBlock(torch1.add(baseVec),BaseBlock(BlockID.TORCH));
+    blocks.setBlock(torch2.add(baseVec),BaseBlock(BlockID.TORCH));
+    blocks.setBlock(chest.add(baseVec),BaseBlock(BlockID.CHEST));
+    //chestblock.setItems(BaseItemStack[] items) 
+}
+
 function Spawner(StartX, StartZ)
 // For now, creates a block one above the first non-air block it encounters
 // of type "blocktype"
@@ -225,3 +275,8 @@ Raftor(blocktype,origin.getZ()-size            ,origin.getX()-size-RaftorSize ,s
 Floor(blocktype, size, size);
 
 player.print ("Done");
+
+//for(var i=0;i<20;i++)
+//{
+//    blocks.setBlock(VectorRotate(Vector(0.5,85+i,0.5),i),BaseBlock(BlockID.LIGHTSTONE));
+//}//Makes a spiral staircase of lightstone around the origin
