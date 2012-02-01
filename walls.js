@@ -44,10 +44,9 @@ context.checkArgs(2, 2, "[players] <type>");
  * Here we expect two inputs exactly in the format of the usage string
  */
 
-var players = parseInt(argv[1]); //Parses the player number
-
-var blocktype = context.getBlock(argv[2]); // Parses the block type
-
+var players = parseInt(argv[1]); 			// Parses the player number
+var blocktype = context.getBlock(argv[3]); 	// Parses the block type
+var origin = player.getPosition(); // read in the block the player is standing on 
 var size = players * 10; //Sets the +/- of the border
 var RaftorSize = 15; //Sets the width of the Raftors. 
                      //Ideal for clean Minecraft map. RaftorSize = 150
@@ -106,13 +105,16 @@ function Raftor(blocktype, StartZ, StartX, mySize, isInXdirection)
 //+Z == South
 
 //Wall(blocktype,StartX,StartZ,mySize,isInXdirection);
-Wall(blocktype,-size,-size,size+size+1,1);//North
-Wall(blocktype,-size,size,size+size+1,1);//South
-Wall(blocktype,size,-size,size+size+1,0);//East
-Wall(blocktype,-size,-size,size+size+1,0);//West
+Wall(blocktype,origin.getX()-size,origin.getZ()-size,size+size+1,1); // North
+Wall(blocktype,origin.getX()-size,origin.getZ()+size,size+size+1,1); // South
+Wall(blocktype,origin.getX()+size,origin.getZ()-size,size+size+1,0); // East
+Wall(blocktype,origin.getX()-size,origin.getZ()-size,size+size+1,0); // West
 
-Raftor(blocktype, -size - RaftorSize, -size - RaftorSize, size, 0)
-Raftor(blocktype, size, -size, size, 0)
-Raftor(blocktype, -size - RaftorSize, size, size, 1)
-Raftor(blocktype, -size, -size - RaftorSize, size, 1)
+//Raftor(blocktype,StartX,StartZ,mySize,isInXdirection);
+Raftor(blocktype,origin.getZ()-size-RaftorSize ,origin.getX()-size-RaftorSize ,size,0); // SW
+Raftor(blocktype,origin.getZ()+size            ,origin.getX()-size            ,size,0); // NE
+Raftor(blocktype,origin.getZ()-size-RaftorSize ,origin.getX()+size            ,size,1); // NW
+Raftor(blocktype,origin.getZ()-size            ,origin.getX()-size-RaftorSize ,size,1); // SE
+
+player.print ("Done");
 
