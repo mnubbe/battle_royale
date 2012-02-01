@@ -46,7 +46,8 @@ context.checkArgs(2, 2, "[players] <type>");
 
 var players = parseInt(argv[1]); 			// Parses the player number
 var blocktype = context.getBlock(argv[2]); 	// Parses the block type
-var origin = player.getPosition(); // read in the block the player is standing on 
+//var origin = player.getPosition(); // read in the block the player is standing on 
+var origin = new Vector(0,0,0);
 var size = players * 10; //Sets the +/- of the border
 var RaftorSize = 15; //Sets the width of the Raftors. 
 //Ideal for clean Minecraft map. RaftorSize = 150
