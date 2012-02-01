@@ -161,6 +161,21 @@ function VectorRotate(inVector,numberOfRotations)
     return Vector(newx, inVector.getY(),newz);
 }
 
+function SpawnChest(Location, Items)
+//Places a chest and populates it with items
+/* Example Usage
+ * var Map0 = new BaseItemStack(358, 1);
+ * var ChestPos = new Vector(121,65,117)
+ * SpanChest(ChestPos,Map0);
+
+ */
+{
+	var items = [Items]
+	var block = BaseBlock(ChestBlock(1,items));
+	blocks.setBlock(Location,block);
+
+}
+
 //confirmed to work
 function MakeSpawnRoom(x,y,z,direction){
     //0 = north, 1=east, 2=south, 3=west (in terms of what direction you look into the door)
@@ -184,10 +199,12 @@ function MakeSpawnRoom(x,y,z,direction){
     var torch2 = new VectorRotate(Vector(-1,2,-2),direction);
     var chest  = new VectorRotate(Vector(-1,1,-2),direction);
 
+    //Place 2 torches
     blocks.setBlock(torch1.add(baseVec),BaseBlock(BlockID.TORCH));
     blocks.setBlock(torch2.add(baseVec),BaseBlock(BlockID.TORCH));
-    blocks.setBlock(chest.add(baseVec),BaseBlock(BlockID.CHEST));
-    //chestblock.setItems(BaseItemStack[] items) 
+    //Place the chest with a map in it
+    var Map0 = new BaseItemStack(358, 1);
+    SpawnChest(chest.add(baseVec),Map0);
 }
 
 function Spawner(StartX, StartZ)
@@ -236,20 +253,6 @@ function Floor(blocktype, StartX, StartZ)
 	}
 }
 
-function SpanChest(Location, Items)
-//Places a chest and populates it with items
-/* Example Usage
- * var Map0 = new BaseItemStack(358, 1);
- * var ChestPos = new Vector(121,65,117)
- * SpanChest(ChestPos,Map0);
- */
-{
-	var items = [Items]
-	var block = BaseBlock(ChestBlock(1,items));
-	blocks.setBlock(Location,block);
-
-}
-
 //Function execution
 
 //Notes:
@@ -276,8 +279,9 @@ Floor(blocktype, size, size);
 Spawner(0,0);
 
 
-
 //for(var i=0;i<20;i++)
 //{
 //    blocks.setBlock(VectorRotate(Vector(0.5,85+i,0.5),i),BaseBlock(BlockID.LIGHTSTONE));
 //}//Makes a spiral staircase of lightstone around the origin
+
+
