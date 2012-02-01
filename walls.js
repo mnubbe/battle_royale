@@ -157,4 +157,8 @@ Raftor(blocktype, size, -size, size, 0);
 Raftor(blocktype, -size - RaftorSize, size, size, 1);
 Raftor(blocktype, -size, -size - RaftorSize, size, 1);
 
+<<<<<<< HEAD
 Spawner(0,0);
+=======
+Spawner(0,0);
+>>>>>>> dea802aaa6759a0b597e7fba2411ee403c39199a
