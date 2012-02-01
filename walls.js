@@ -179,7 +179,7 @@ Wall(blocktype,origin.getX()-size,origin.getZ()+size,size+size+1,1); // South
 Wall(blocktype,origin.getX()+size,origin.getZ()-size,size+size+1,0); // East
 Wall(blocktype,origin.getX()-size,origin.getZ()-size,size+size+1,0); // West
 
-//Raftor(blocktype,StartX,StartZ,mySize,isInXdirection);
+//Raftor(blocktype,StartZ,StartX,mySize,isInXdirection);
 Raftor(blocktype,origin.getZ()-size-RaftorSize ,origin.getX()-size-RaftorSize ,size,0); // SW
 Raftor(blocktype,origin.getZ()+size            ,origin.getX()-size            ,size,0); // NE
 Raftor(blocktype,origin.getZ()-size-RaftorSize ,origin.getX()+size            ,size,1); // NW
