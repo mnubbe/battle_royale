@@ -1,4 +1,3 @@
-// $Id$
 /*
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -12,27 +11,38 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
-*/
+ */
 
 /*
-
-Command in Minecraft to use:
-
-/cs walls [players] <type>
-[players] = number of players in the game
-<type> = material type for the wall
-
-*/
+ * 
+ * Command in Minecraft to use:
+ * 
+ * /cs walls [players] <type>
+ * [players] = number of players in the game
+ * <type> = material type for the wall
+ * 
+ */
 
 importPackage(Packages.java.io);
 importPackage(Packages.java.awt);
 importPackage(Packages.com.sk89q.worldedit);
 importPackage(Packages.com.sk89q.worldedit.blocks);
 
+// API list for these packages can be found at
+// http://www.sk89q.com/docs/worldedit/api/
+
 var blocks = context.remember();
 
-context.checkArgs(1, 2, "[players] <type>"); // From observing other code, 1 starts this, 
-              //and the 2 was necessary based on observing code with other argument numbers
+context.checkArgs(2, 2, "[players] <type>"); 
+
+/*
+ * checkArgs checks to make sure that there are enough but not too many
+ * arguments provided by the player.
+ * 
+ * checkArgs(min,max,usage string)
+ * 
+ * Here we expect two inputs exactly in the format of the usage string
+ */
 
 var players = parseInt(argv[1]); //Parses the player number
 
