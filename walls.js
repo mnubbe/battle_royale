@@ -161,6 +161,7 @@ function VectorRotate(inVector,numberOfRotations)
     return Vector(newx, inVector.getY(),newz);
 }
 
+//confirmed to work
 function SpawnChest(Location, Items)
 //Places a chest and populates it with items
 /* Example Usage
@@ -207,6 +208,7 @@ function MakeSpawnRoom(x,y,z,direction){
     SpawnChest(chest.add(baseVec),Map0);
 }
 
+//confirmed to work
 function Spawner(StartX, StartZ)
 // For now, creates a block one above the first non-air block it encounters
 // of type "blocktype"
@@ -232,6 +234,7 @@ function Spawner(StartX, StartZ)
 	blocks.setBlock(vecC, blocktype);
 }
 
+//confirmed to work
 function Floor(blocktype, StartX, StartZ)
 // Creates a floor of bedrock, three blocks of air, and then a glowstone floor.
 {
