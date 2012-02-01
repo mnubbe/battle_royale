@@ -51,6 +51,7 @@ var origin = new Vector(0,0,0);
 var size = players * 10; //Sets the +/- of the border
 var RaftorSize = 15; //Sets the width of the Raftors. 
 //Ideal for clean Minecraft map. RaftorSize = 150
+var floor = 90; // floor height
 
 //Examples:
 //Confirmed to work
@@ -160,6 +161,30 @@ function Spawner(StartX, StartZ)
 	vecC = Vector(StartX, y, StartZ);
 	blocks.setBlock(vecC, blocktype);
 }
+
+function Floor(blocktype, StartX, StartZ)
+// Creates a floor of bedrock, three blocks of air, and then a glowstone floor.
+{
+	var b = blocktype;
+	for(var x = -StartX; x<=StartX; x++){
+		for(var z = -StartZ; z<=StartZ; z++){
+			for(var y = floor; y>=floor-4; y--){
+				
+				if (y == floor){ //Adds bedrock floor
+					b = BaseBlock(BlockID.BEDROCK);
+				}else
+					if (y == floor-1 || y == floor-2 || y == floor-3){ //Adds three layers of air
+						b = BaseBlock(BlockID.AIR);
+					}else{
+						
+						b = BaseBlock(BlockID.LIGHTSTONE); //Adds layer of glowstone below the air
+					}				
+				var vec = new Vector(x, y, z);
+				blocks.setBlock(vec, b);
+			}
+		}
+	}
+}
 //Function execution
 
 //Notes:
@@ -180,6 +205,8 @@ Raftor(blocktype,origin.getZ()-size-RaftorSize ,origin.getX()+size            ,s
 Raftor(blocktype,origin.getZ()-size            ,origin.getX()-size-RaftorSize ,size,1); // SE
 
 player.print ("Done");
+
+Floor(blocktype, size, size);
 
 Spawner(0,0);
 
