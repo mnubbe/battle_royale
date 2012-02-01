@@ -14,6 +14,7 @@
  */
 
 /*
+<<<<<<< HEAD
  * 
  * Command in Minecraft to use:
  * 
@@ -21,6 +22,15 @@
  * [players] = number of players in the game
  * <type> = material type for the wall
  * 
+=======
+ 
+ Command in Minecraft to use:
+ 
+ /cs walls [players] <type>
+ [players] = number of players in the game
+ <type> = material type for the wall
+ 
+>>>>>>> 60969672ea289af36fbe704b252e6f679806072d
  */
 
 importPackage(Packages.java.io);
@@ -31,7 +41,14 @@ importPackage(Packages.com.sk89q.worldedit.blocks);
 // API list for these packages can be found at
 // http://www.sk89q.com/docs/worldedit/api/
 
+<<<<<<< HEAD
 var blocks = context.remember();
+=======
+context.checkArgs(1, 2, "[players] <type>"); // From observing other code, 1 starts this, 
+//and the 2 was necessary based on observing code with other argument numbers
+
+var players = parseInt(argv[1]); //Parses the player number
+>>>>>>> 60969672ea289af36fbe704b252e6f679806072d
 
 context.checkArgs(2, 2, "[players] <type>"); 
 
@@ -49,7 +66,7 @@ var blocktype = context.getBlock(argv[3]); 	// Parses the block type
 var origin = player.getPosition(); // read in the block the player is standing on 
 var size = players * 10; //Sets the +/- of the border
 var RaftorSize = 15; //Sets the width of the Raftors. 
-                     //Ideal for clean Minecraft map. RaftorSize = 150
+//Ideal for clean Minecraft map. RaftorSize = 150
 
 
 //Functions
@@ -97,6 +114,57 @@ function Raftor(blocktype, StartZ, StartX, mySize, isInXdirection)
     }
 }
 
+function SquareXZ(blocktype,radius,x,y,z)
+//Makes a (1+2*radius) sized square centered at x,y,z.  radius==0 means 1x1, r=1 means 3x3, so on...
+{
+    for(var i=x-radius;i<=x+radius;i++){
+        for(var j=y-radius;j<=y+radius;j++){
+            var vecE = new Vector(i,j,z);
+            blocks.setBlock(vecE,blocktype);
+        }
+    }
+}
+
+function MakePavillion(x,y,z){
+    //SquareXZ(mossy_cobblestone,5,x,y,z);
+    //SquareXZ(bedrock,2,x,y,z);
+    //SquareXZ(air,5,x,y+1,z);
+    //SquareXZ(air,5,x,y+2,z);
+    //SquareXZ(bedrock,5,x,y+3,z);
+    //SquareXZ(bedrock,5,x,y+4,z);
+    //SquareXZ(bedrock,5,x,y+5,z);
+    //SquareXZ(lava,4,x,y+4,z);
+    //SquareXZ(lava,4,x,y+5,z);
+    var positions = [-1,1];
+    for(i in positions){
+        for(j in positions){
+            //add torches (1)
+            //add glass (2)
+        }
+    }
+}
+
+function Spawner(StartX, StartZ)
+// For now, creates a block one above the first non-air block it encounters
+// of type "blocktype"
+{
+	var vecC = new Vector(StartX, 126, StartZ); //initializing variables
+	var y = 127;
+	var airCheck = true;
+	var block = blocks.getBlockType(vecC);
+	while (airCheck==true){ //while the block in question is air, the loop continues down
+		y=y-1;
+		vecC = Vector(StartX, y, StartZ);
+		block = blocks.getBlockType(vecC);
+		
+		if (block != BlockID.AIR) {
+			airCheck = false;
+		}
+	 }
+	y = y+1; // sets the block to be places above the not-air block encountered
+	vecC = Vector(StartX, y, StartZ);
+	blocks.setBlock(vecC, blocktype);
+}
 //Function execution
 
 //Notes:
@@ -105,6 +173,7 @@ function Raftor(blocktype, StartZ, StartX, mySize, isInXdirection)
 //+Z == South
 
 //Wall(blocktype,StartX,StartZ,mySize,isInXdirection);
+<<<<<<< HEAD
 Wall(blocktype,origin.getX()-size,origin.getZ()-size,size+size+1,1); // North
 Wall(blocktype,origin.getX()-size,origin.getZ()+size,size+size+1,1); // South
 Wall(blocktype,origin.getX()+size,origin.getZ()-size,size+size+1,0); // East
@@ -117,4 +186,16 @@ Raftor(blocktype,origin.getZ()-size-RaftorSize ,origin.getX()+size            ,s
 Raftor(blocktype,origin.getZ()-size            ,origin.getX()-size-RaftorSize ,size,1); // SE
 
 player.print ("Done");
+=======
+Wall(blocktype,-size,-size,size+size+1,1);//North
+Wall(blocktype,-size,size,size+size+1,1);//South
+Wall(blocktype,size,-size,size+size+1,0);//East
+Wall(blocktype,-size,-size,size+size+1,0);//West
 
+Raftor(blocktype, -size - RaftorSize, -size - RaftorSize, size, 0);
+Raftor(blocktype, size, -size, size, 0);
+Raftor(blocktype, -size - RaftorSize, size, size, 1);
+Raftor(blocktype, -size, -size - RaftorSize, size, 1);
+>>>>>>> 60969672ea289af36fbe704b252e6f679806072d
+
+Spawner(0,0);
