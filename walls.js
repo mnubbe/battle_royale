@@ -1,4 +1,3 @@
-// $Id$
 /*
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,6 +14,15 @@
  */
 
 /*
+<<<<<<< HEAD
+ * 
+ * Command in Minecraft to use:
+ * 
+ * /cs walls [players] <type>
+ * [players] = number of players in the game
+ * <type> = material type for the wall
+ * 
+=======
  
  Command in Minecraft to use:
  
@@ -22,6 +30,7 @@
  [players] = number of players in the game
  <type> = material type for the wall
  
+>>>>>>> 60969672ea289af36fbe704b252e6f679806072d
  */
 
 importPackage(Packages.java.io);
@@ -29,15 +38,32 @@ importPackage(Packages.java.awt);
 importPackage(Packages.com.sk89q.worldedit);
 importPackage(Packages.com.sk89q.worldedit.blocks);
 
-var blocks = context.remember();
+// API list for these packages can be found at
+// http://www.sk89q.com/docs/worldedit/api/
 
+<<<<<<< HEAD
+var blocks = context.remember();
+=======
 context.checkArgs(1, 2, "[players] <type>"); // From observing other code, 1 starts this, 
 //and the 2 was necessary based on observing code with other argument numbers
 
 var players = parseInt(argv[1]); //Parses the player number
+>>>>>>> 60969672ea289af36fbe704b252e6f679806072d
 
-var blocktype = context.getBlock(argv[2]); // Parses the block type
+context.checkArgs(2, 2, "[players] <type>"); 
 
+/*
+ * checkArgs checks to make sure that there are enough but not too many
+ * arguments provided by the player.
+ * 
+ * checkArgs(min,max,usage string)
+ * 
+ * Here we expect two inputs exactly in the format of the usage string
+ */
+
+var players = parseInt(argv[1]); 			// Parses the player number
+var blocktype = context.getBlock(argv[3]); 	// Parses the block type
+var origin = player.getPosition(); // read in the block the player is standing on 
 var size = players * 10; //Sets the +/- of the border
 var RaftorSize = 15; //Sets the width of the Raftors. 
 //Ideal for clean Minecraft map. RaftorSize = 150
@@ -157,6 +183,20 @@ function Spawner(StartX, StartZ)
 //+Z == South
 
 //Wall(blocktype,StartX,StartZ,mySize,isInXdirection);
+<<<<<<< HEAD
+Wall(blocktype,origin.getX()-size,origin.getZ()-size,size+size+1,1); // North
+Wall(blocktype,origin.getX()-size,origin.getZ()+size,size+size+1,1); // South
+Wall(blocktype,origin.getX()+size,origin.getZ()-size,size+size+1,0); // East
+Wall(blocktype,origin.getX()-size,origin.getZ()-size,size+size+1,0); // West
+
+//Raftor(blocktype,StartX,StartZ,mySize,isInXdirection);
+Raftor(blocktype,origin.getZ()-size-RaftorSize ,origin.getX()-size-RaftorSize ,size,0); // SW
+Raftor(blocktype,origin.getZ()+size            ,origin.getX()-size            ,size,0); // NE
+Raftor(blocktype,origin.getZ()-size-RaftorSize ,origin.getX()+size            ,size,1); // NW
+Raftor(blocktype,origin.getZ()-size            ,origin.getX()-size-RaftorSize ,size,1); // SE
+
+player.print ("Done");
+=======
 Wall(blocktype,-size,-size,size+size+1,1);//North
 Wall(blocktype,-size,size,size+size+1,1);//South
 Wall(blocktype,size,-size,size+size+1,0);//East
@@ -166,6 +206,7 @@ Raftor(blocktype, -size - RaftorSize, -size - RaftorSize, size, 0);
 Raftor(blocktype, size, -size, size, 0);
 Raftor(blocktype, -size - RaftorSize, size, size, 1);
 Raftor(blocktype, -size, -size - RaftorSize, size, 1);
+>>>>>>> 60969672ea289af36fbe704b252e6f679806072d
 
 Spawner(0,0);
 
