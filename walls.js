@@ -259,6 +259,21 @@ function Floor(blocktype, StartX, StartZ)
 	}
 }
 
+function SpawnSign(type, orient, signX, signY, signZ)
+//Spawns a sign. Sign type 63 is a standing sign, 68 is a wall sign.
+//Orientation is an int.
+//for type 63, will rotate among 12 options.
+//for type 68, will orient on specified wall:
+//2 = +z wall, 3 = -z wall, 4 = +x wall, 5 = -x wall
+{
+	var vec = new Vector(signX, signY, signZ);
+	var text = ["Herp", "Derp"," " ,"Magerp"]; //4 parts, one for each line of the sign.
+	//Requires " " for a blank line, otherwise will put a strange addresss.
+	var b = BaseBlock(SignBlock(type,orient,text));
+	
+	blocks.setBlock(vec,b);
+}
+
 //Function execution
 
 //Notes:
