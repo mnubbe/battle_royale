@@ -168,13 +168,13 @@ function SpawnChest(Location, Items)
  * var Map0 = new BaseItemStack(358, 1);
  * var ChestPos = new Vector(121,65,117)
  * SpanChest(ChestPos,Map0);
-
+ 
  */
 {
 	var items = [Items]
 	var block = BaseBlock(ChestBlock(1,items));
 	blocks.setBlock(Location,block);
-
+	
 }
 
 //confirmed to work
@@ -195,18 +195,68 @@ function MakeSpawnRoom(x,y,z,direction){
     //Make every face bedrock
     blocks.makeCuboidFaces(cuboid,BaseBlock(BlockID.BEDROCK));
     
-    //Relative vectors for the 3 internal objects
+    //Relative vectors for the internal objects
     var torch1 = new VectorRotate(Vector( 1,2,-2),direction);
     var torch2 = new VectorRotate(Vector(-1,2,-2),direction);
     var chest  = new VectorRotate(Vector(-1,1,-2),direction);
-
+	var sign1  = new VectorRotate(Vector(0,4,-2),direction);
+	var sign2  = new VectorRotate(Vector(0,3,-2),direction);
+	var sign3  = new VectorRotate(Vector(-1,3,-2),direction);
+	var sign4  = new VectorRotate(Vector(-2,3,-2),direction);
+	var sign5  = new VectorRotate(Vector(-2,3,-3),direction);
+	var sign6  = new VectorRotate(Vector(-2,3,-4),direction);
+	var sign7  = new VectorRotate(Vector(-2,3,-5),direction);
+	var sign8  = new VectorRotate(Vector(-1,3,-5),direction);
+	var sign9  = new VectorRotate(Vector(0,3,-5),direction);
+	var sign10 = new VectorRotate(Vector(1,3,-5),direction);
+	
+	
     //Place 2 torches
     blocks.setBlock(torch1.add(baseVec),BaseBlock(BlockID.TORCH));
     blocks.setBlock(torch2.add(baseVec),BaseBlock(BlockID.TORCH));
     //Place the chest with a map in it
     var Map0 = new BaseItemStack(358, 1);
     SpawnChest(chest.add(baseVec),Map0);
+	//Place a sign above the door
+	if (direction == 2){
+		signDirection = 3;
+	}else
+		if (direction ==1){
+			signDirection = 5;
+		}else
+			if (direction == 3){
+				signDirection = 4;
+			}else{
+				signDirection = 2;
+			}
+	SpawnSign(68,signDirection,sign1.add(baseVec),["Battle","Royale!"," "," "]);
+	SpawnSign(68,signDirection,sign2.add(baseVec),["When the door","opens, you","must Minecraft","until only one"]);
+	SpawnSign(68,signDirection,sign3.add(baseVec),["person is left","alive.","The map has","been boxed in"]);
+	SpawnSign(68,signDirection,sign4.add(baseVec),["on five sides","with bedrock,","with a floor at","y = 40."]);
+	
+	signDirection = RotateSign(signDirection); // Rotates sign to align with next wall
+	
+	SpawnSign(68,signDirection,sign5.add(baseVec),["This prevents","mining of rarer","resources.","The only way"]);
+	SpawnSign(68,signDirection,sign6.add(baseVec),["to obtain these","resources, such","as diamond and","redstone, is"]);
+	SpawnSign(68,signDirection,sign7.add(baseVec),["to visit a","Resource","Spawner,","marked in red"]);
+	
+	signDirection = RotateSign(signDirection);
+	
+	SpawnSign(68,signDirection,sign8.add(baseVec),["on the map","found in the","chest next","to you."]);
+	SpawnSign(68,signDirection,sign9.add(baseVec),["The center","spawner is much","more likely","to spawn"]);
+	SpawnSign(68,signDirection,sign10.add(baseVec),["high quality","resource."," ","GL HF!"]);
+	
 }
+
+//confirmed to work
+function RotateSign(originalDirection){
+	//Rotates sign direction clockwise once
+	if (originalDirection == 2) {return 5}
+	else if (originalDirection == 3) {return 4}
+	else if (originalDirection == 4) {return 2}
+	else {return 3}
+}
+
 
 //confirmed to work
 function Spawner(StartX, StartZ)
@@ -228,7 +278,7 @@ function Spawner(StartX, StartZ)
 		if (block != BlockID.AIR) {
 			airCheck = false;
 		}
-	 }
+	}
 	y = y+1; // sets the block to be places above the not-air block encountered
 	vecC = Vector(StartX, y, StartZ);
 	blocks.setBlock(vecC, blocktype);
@@ -259,15 +309,16 @@ function Floor(blocktype, StartX, StartZ)
 	}
 }
 
-function SpawnSign(type, orient, signX, signY, signZ)
+//confirmed to work
+function SpawnSign(type, orient, signVec, signText)
 //Spawns a sign. Sign type 63 is a standing sign, 68 is a wall sign.
 //Orientation is an int.
 //for type 63, will rotate among 12 options.
 //for type 68, will orient on specified wall:
 //2 = +z wall, 3 = -z wall, 4 = +x wall, 5 = -x wall
 {
-	var vec = new Vector(signX, signY, signZ);
-	var text = ["Herp", "Derp"," " ,"Magerp"]; //4 parts, one for each line of the sign.
+	var vec = signVec;
+	var text = signText; //4 part array, one for each line of the sign.
 	//Requires " " for a blank line, otherwise will put a strange addresss.
 	var b = BaseBlock(SignBlock(type,orient,text));
 	
@@ -294,6 +345,13 @@ Raftor(blocktype,origin.getZ()-size-RaftorSize ,origin.getX()+size            ,s
 Raftor(blocktype,origin.getZ()-size            ,origin.getX()-size-RaftorSize ,size,1); // SE
 
 Floor(blocktype, size, size);
+
+//MakePavillion(0,floor+1,0,0);
+
+//MakeSpawnRoom(0,120,9,2);
+//MakeSpawnRoom(9,120,0,1);
+//MakeSpawnRoom(-9,120,0,3);
+//MakeSpawnRoom(0,120,-9,0);
 
 player.print ("Done");
 
