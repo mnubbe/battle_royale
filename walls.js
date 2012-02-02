@@ -178,10 +178,43 @@ function SpawnChest(Location, Items)
 }
 
 //confirmed to work
-function MakeSpawnRoom(x,y,z,direction){
+function MakeSpawnRoom(x,z,direction){
     //0 = north, 1=east, 2=south, 3=west (in terms of what direction you look into the door)
     var dir = [[0,-1],[1,0],[0,1],[-1,0]];//Mappings for unit vectors for these directions
-    var baseVec = new Vector(x,y,z);
+	
+	//find where air meets ground
+	if (x!=size){
+		if (z==size){
+			groundZ = z-1;
+		}else{ 
+			groundZ = z+1;
+		}
+	}else {groundZ = z;
+	}
+	
+	if (z!=size){
+		if (x==size){
+			groundX = x-1;
+		}else{
+			groundX = x+1;
+		}
+	}else {groundX = x;
+	}
+	
+	var groundVec = new Vector(groundX,127,groundZ);
+	var y = 127;
+	var airCheck = true;
+	var block = blocks.getBlockType(groundVec);
+	while (airCheck==true){
+		y=y-1;
+		groundVec = Vector(groundX,y,groundZ);
+		block = blocks.getBlockType(groundVec);
+		if (block != BlockID.AIR) {
+			airCheck = false;
+		}
+	}
+	
+    var baseVec = new Vector(groundX,y,groundZ);
     blocks.setBlock(baseVec,BaseBlock(BlockID.BEDROCK));
     //Set the two relative vectors for a north room's cuboid
     var vecMod1 = new Vector(-3,0,-1);
@@ -346,12 +379,43 @@ Raftor(blocktype,origin.getZ()-size            ,origin.getX()-size-RaftorSize ,s
 
 Floor(blocktype, size, size);
 
-//MakePavillion(0,floor+1,0,0);
+MakeSpawnRoom(-size/3,size,2);
+if (players > 1){
+	MakeSpawnRoom(size/3,-size,0);
+}
+if (players > 2){
+	MakeSpawnRoom(-size,-size/3,3);
+}
+if (players > 3){
+	MakeSpawnRoom(size,size/3,1);
+}
+if (players > 4){
+	MakeSpawnRoom(size/3,size,2);
+}
+if (players > 5){
+	MakeSpawnRoom(-size/3,-size,0);
+}
+if (players > 6){
+	MakeSpawnRoom(-size, size/3,3);
+}
+if (players > 7){
+	MakeSpawnRoom(size, -size/3,1);
+}
+if (players > 8){
+	MakeSpawnRoom(-size+1, size, 2);
+}
+if (players > 9){
+	MakeSpawnRoom(size-1, -size, 0);
+}
+if (players > 10){
+	MakeSpawnRoom(-size, -size+1, 3);
+}
+if (players > 11){
+	MakeSpawnRoom(size, size-1, 1);
+}
 
-//MakeSpawnRoom(0,120,9,2);
-//MakeSpawnRoom(9,120,0,1);
-//MakeSpawnRoom(-9,120,0,3);
-//MakeSpawnRoom(0,120,-9,0);
+
+//MakePavillion(0,floor+1,0,0);
 
 player.print ("Done");
 
