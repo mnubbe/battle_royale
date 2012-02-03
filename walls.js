@@ -367,23 +367,28 @@ Raftor(blocktype,origin.getZ()-size            ,origin.getX()-size-RaftorSize ,s
 Floor(blocktype, size, size);
 
 MakeSpawnRoom(-size/3,size,2);
+MakePavillion(0,0);
 if (players > 1){
 	MakeSpawnRoom(size/3,-size,0);
 }
 if (players > 2){
 	MakeSpawnRoom(-size,-size/3,3);
+	MakePavillion(-size/2, size/2);
 }
 if (players > 3){
 	MakeSpawnRoom(size,size/3,1);
 }
 if (players > 4){
 	MakeSpawnRoom(size/3,size,2);
+	MakePavillion(size/2, -size/2);
 }
 if (players > 5){
 	MakeSpawnRoom(-size/3,-size,0);
 }
 if (players > 6){
 	MakeSpawnRoom(-size, size/3,3);
+	MakePavillion(size/2, size/2);
+	MakePavillion(-size/2,-size/2);
 }
 if (players > 7){
 	MakeSpawnRoom(size, -size/3,1);
@@ -400,9 +405,6 @@ if (players > 10){
 if (players > 11){
 	MakeSpawnRoom(size, size-1, 1);
 }
-
-
-MakePavillion(0,0);
 
 player.print ("Done");
 
