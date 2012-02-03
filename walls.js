@@ -173,8 +173,29 @@ function SpawnChest(Location, Items)
 {
 	var items = [Items]
 	var block = BaseBlock(ChestBlock(1,items));
-	blocks.setBlock(Location,block);
+	blocks.setBlock(Location,block);	
+}
+
+// confirmed to work
+function FindElevation(X,Z){
+	// Function to search for the first non air block and returns y position
+	// initializing variables
+	var Y = 127;
+	var PosVec = new Vector(X, Y, Z); 
+	var AirCheck = true;
+	var Block = blocks.getBlockType(PosVec);
 	
+	while (AirCheck==true){ // while the block in question is air, the loop continues down
+		Y=Y-1;
+		PosVec = Vector(X, Y, Z);
+		Block = blocks.getBlockType(PosVec);
+		
+		if (Block != BlockID.AIR) {
+			AirCheck = false;
+		}
+	}
+	Y = Y + 1; // ensures that the returned values is the Y of the interface between air and ground
+	return Y
 }
 
 //confirmed to work
@@ -201,21 +222,11 @@ function MakeSpawnRoom(x,z,direction){
 	}else {groundX = x;
 	}
 	
-	var groundVec = new Vector(groundX,127,groundZ);
-	var y = 127;
-	var airCheck = true;
-	var block = blocks.getBlockType(groundVec);
-	while (airCheck==true){
-		y=y-1;
-		groundVec = Vector(groundX,y,groundZ);
-		block = blocks.getBlockType(groundVec);
-		if (block != BlockID.AIR) {
-			airCheck = false;
-		}
-	}
+	y = FindElevation(groundX,groundZ)
 	
-    var baseVec = new Vector(groundX,y,groundZ);
+    var baseVec = new Vector(groundX,y-1,groundZ);
     blocks.setBlock(baseVec,BaseBlock(BlockID.BEDROCK));
+    
     //Set the two relative vectors for a north room's cuboid
     var vecMod1 = new Vector(-3,0,-1);
     var vecMod2 = new Vector(3,6,-6);
