@@ -117,7 +117,9 @@ function SquareXZ(blocktype,radius,x,y,z)
 }
 
 //Confirmed to work
-function MakePavillion(x,y,z){
+function MakePavillion(x,z)
+{
+	y = FindElevation(x,z)
     SquareXZ(BaseBlock(BlockID.MOSSY_COBBLESTONE),5,x,y,z);
     SquareXZ(BaseBlock(BlockID.BEDROCK),2,x,y,z);
     SquareXZ(BaseBlock(BlockID.AIR),5,x,y+1,z);
@@ -142,8 +144,8 @@ function MakePavillion(x,y,z){
 }
 
 //Confirmed to work
-//Returns a vector rotated 90 degrees from Minecraft's top view
 function VectorRotate(inVector,numberOfRotations)
+//Returns a vector rotated 90 degrees from Minecraft's top view
 {
     var newx;
     var newz;
@@ -177,9 +179,10 @@ function SpawnChest(Location, Items)
 }
 
 // confirmed to work
-function FindElevation(X,Z){
-	// Function to search for the first non air block and returns y position
+function FindElevation(X,Z)
+	//Function to search for the first non air block and returns y position
 	// initializing variables
+{
 	var Y = 127;
 	var PosVec = new Vector(X, Y, Z); 
 	var AirCheck = true;
@@ -301,33 +304,6 @@ function RotateSign(originalDirection){
 	else {return 3}
 }
 
-
-//confirmed to work
-function Spawner(StartX, StartZ)
-// For now, creates a block one above the first non-air block it encounters
-// of type "blocktype"
-
-// Example: Spawner(0,0);
-// Spanws a block on the ground at 0,0
-{
-	var vecC = new Vector(StartX, 126, StartZ); //initializing variables
-	var y = 127;
-	var airCheck = true;
-	var block = blocks.getBlockType(vecC);
-	while (airCheck==true){ //while the block in question is air, the loop continues down
-		y=y-1;
-		vecC = Vector(StartX, y, StartZ);
-		block = blocks.getBlockType(vecC);
-		
-		if (block != BlockID.AIR) {
-			airCheck = false;
-		}
-	}
-	y = y+1; // sets the block to be places above the not-air block encountered
-	vecC = Vector(StartX, y, StartZ);
-	blocks.setBlock(vecC, blocktype);
-}
-
 //confirmed to work
 function Floor(blocktype, StartX, StartZ)
 // Creates a floor of bedrock, three blocks of air, and then a glowstone floor.
@@ -426,7 +402,7 @@ if (players > 11){
 }
 
 
-//MakePavillion(0,floor+1,0,0);
+MakePavillion(0,0);
 
 player.print ("Done");
 
