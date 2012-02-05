@@ -47,12 +47,12 @@ context.checkArgs(2, 2, "[players] <type>");
 
 var players = parseInt(argv[1]); 			// Parses the player number
 var blocktype = context.getBlock(argv[2]); 	// Parses the block type
-//var origin = player.getPosition(); // read in the block the player is standing on 
-var origin = new Vector(0,0,0);
-var size = players * 10; //Sets the +/- of the border
+var origin = player.getPosition(); // read in the block the player is standing on 
+//var origin = new Vector(0,0,0);
+var size = 50;//Math.round(Math.sqrt(players))*70; //Sets the +/- of the border
 var RaftorSize = 15; //Sets the width of the Raftors. 
 //Ideal for clean Minecraft map. RaftorSize = 150
-var floor = 90; // floor height
+var floor = 40; // floor height
 
 //Examples:
 //Confirmed to work
@@ -60,14 +60,14 @@ var floor = 90; // floor height
 
 //Functions
 //Confirmed to work
-function Wall(blocktype,StartX,StartZ,mySize,isInXdirection)
+function Wall(blocktype,StartX,StartZ,mySize,isInXdirection,Depth)
 //if(isInXdirection==1), then builds in the +X direction (East)
 //otherwise in the +Z direction (South)
 {
     if(isInXdirection==1){
         var z=StartZ;
         for(var x = StartX;x<mySize+StartX;x++) {
-            for (var y = 0; y < 127; y++) {
+            for (var y = Depth; y < 127; y++) {
                 var vecE = new Vector(x, y, z);
                 blocks.setBlock(vecE, blocktype);
             }
@@ -75,7 +75,7 @@ function Wall(blocktype,StartX,StartZ,mySize,isInXdirection)
     }else{
         var x=StartX;
         for(z = StartZ;z<mySize+StartZ;z++) {
-            for (var y = 0; y < 127; y++) {
+            for (var y = Depth; y < 127; y++) {
                 var vecE = new Vector(x, y, z);
                 blocks.setBlock(vecE, blocktype);
             }
@@ -309,8 +309,8 @@ function Floor(blocktype, StartX, StartZ)
 // Creates a floor of bedrock, three blocks of air, and then a glowstone floor.
 {
 	var b = blocktype;
-	for(var x = -StartX; x<=StartX; x++){
-		for(var z = -StartZ; z<=StartZ; z++){
+	for(var x = origin.getX()-StartX; x<=origin.getX()+StartX; x++){
+		for(var z = origin.getZ()-StartZ; z<=origin.getZ()+StartZ; z++){
 			for(var y = floor; y>=floor-4; y--){
 				
 				if (y == floor){ //Adds bedrock floor
@@ -353,10 +353,10 @@ function SpawnSign(type, orient, signVec, signText)
 //+Z == South
 
 //Wall(blocktype,StartX,StartZ,mySize,isInXdirection);
-Wall(blocktype,origin.getX()-size,origin.getZ()-size,size+size+1,1); // North
-Wall(blocktype,origin.getX()-size,origin.getZ()+size,size+size+1,1); // South
-Wall(blocktype,origin.getX()+size,origin.getZ()-size,size+size+1,0); // East
-Wall(blocktype,origin.getX()-size,origin.getZ()-size,size+size+1,0); // West
+Wall(blocktype,origin.getX()-size,origin.getZ()-size,size+size+1,1,floor); // North
+Wall(blocktype,origin.getX()-size,origin.getZ()+size,size+size+1,1,floor); // South
+Wall(blocktype,origin.getX()+size,origin.getZ()-size,size+size+1,0,floor); // East
+Wall(blocktype,origin.getX()-size,origin.getZ()-size,size+size+1,0,floor); // West
 
 //Raftor(blocktype,StartZ,StartX,mySize,isInXdirection);
 Raftor(blocktype,origin.getZ()-size-RaftorSize ,origin.getX()-size-RaftorSize ,size,0); // SW
@@ -366,44 +366,57 @@ Raftor(blocktype,origin.getZ()-size            ,origin.getX()-size-RaftorSize ,s
 
 Floor(blocktype, size, size);
 
-MakeSpawnRoom(-size/3,size,2);
-MakePavillion(0,0);
+	MakeSpawnRoom(origin.getX()-(size/3),origin.getZ()+size-2,2); // S
+	MakePavillion(origin.getX(),origin.getZ());
+	//player.print ("SpawnRoom 1 and Pavillion 1");
+	
 if (players > 1){
-	MakeSpawnRoom(size/3,-size,0);
+	MakeSpawnRoom(origin.getX()+size/3,	origin.getZ()-size,0); // N
+	//player.print ("SpawnRoom 2");
 }
 if (players > 2){
-	MakeSpawnRoom(-size,-size/3,3);
-	MakePavillion(-size/2, size/2);
+	MakeSpawnRoom(origin.getX()-size,	origin.getZ()-size/3,3); // W
+	MakePavillion(origin.getX()-size/2,	origin.getZ()+size/2);
+	//player.print ("SpawnRoom 3 and Pavillion 2");
 }
 if (players > 3){
-	MakeSpawnRoom(size,size/3,1);
+	MakeSpawnRoom(origin.getX()+size-2,	origin.getZ()+size/3,1); // E
+	//player.print ("SpawnRoom 4");
 }
 if (players > 4){
-	MakeSpawnRoom(size/3,size,2);
-	MakePavillion(size/2, -size/2);
+	MakeSpawnRoom(origin.getX()+size/3,	origin.getZ()+size-2,2); // S
+	MakePavillion(origin.getX()+size/2,	origin.getZ()-size/2);
+	//player.print ("SpawnRoom 5 and Pavillion 3");
 }
 if (players > 5){
-	MakeSpawnRoom(-size/3,-size,0);
+	MakeSpawnRoom(origin.getX()-size/3,	origin.getZ()-size,0); // N
+	//player.print ("SpawnRoom 6");
 }
 if (players > 6){
-	MakeSpawnRoom(-size, size/3,3);
-	MakePavillion(size/2, size/2);
-	MakePavillion(-size/2,-size/2);
+	MakeSpawnRoom(origin.getX()-size,	origin.getZ()+size/3,3); // W
+	MakePavillion(origin.getX()+size/2, origin.getZ()+size/2);
+	MakePavillion(origin.getX()-size/2,	origin.getZ()-size/2);
+	//player.print ("SpawnRoom 7 and Pavillion 4 and 5");
 }
 if (players > 7){
-	MakeSpawnRoom(size, -size/3,1);
+	MakeSpawnRoom(origin.getX()+size-2, 	origin.getZ()-size/3,1); // E
+	//player.print ("SpawnRoom 8");
 }
 if (players > 8){
-	MakeSpawnRoom(-size+1, size, 2);
+	MakeSpawnRoom(origin.getX()-size+1, origin.getZ()+size-2, 2); // SW Corner
+	//player.print ("SpawnRoom 9");
 }
 if (players > 9){
-	MakeSpawnRoom(size-1, -size, 0);
+	MakeSpawnRoom(origin.getX()+size-3, origin.getZ()-size, 0); // NE Corner
+	//player.print ("SpawnRoom 10");
 }
 if (players > 10){
-	MakeSpawnRoom(-size, -size+1, 3);
+	MakeSpawnRoom(origin.getX()-size, 	origin.getZ()-size+1, 3); // NW Corner
+	//player.print ("SpawnRoom 11");
 }
 if (players > 11){
-	MakeSpawnRoom(size, size-1, 1);
+	MakeSpawnRoom(origin.getX()+size-2, 	origin.getZ()+size-3, 1); // SE Corner
+	//player.print ("SpawnRoom 12");
 }
 
 player.print ("Done");
